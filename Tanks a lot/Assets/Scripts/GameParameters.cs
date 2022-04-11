@@ -48,6 +48,10 @@ public class GameParameters : ScriptableObject
     [SerializeField] private float _tankShellSpeed;
     public float TankShellSpeed { get => _tankShellSpeed; }
 
+    [Tooltip("La durée de vie en s d'un obus de tank")]
+    [SerializeField] private float _tankShellDuration;
+    public float TankShellDuration { get => _tankShellDuration; }
+
     [Tooltip("Les dégâts de l'explosion d'un obus de tank")]
     [SerializeField] private float _tankShellDamage;
     public float TankShellDamage { get => _tankShellDamage; }
@@ -69,6 +73,10 @@ public class GameParameters : ScriptableObject
     [Tooltip("Le délai en s avant lequel une zone capturée commence à perdre de sa jauge de capture s'il n'y a plus de tank")]
     [SerializeField] private float _zoneDecayDelay;
     public float ZoneDecayDelay { get => _zoneDecayDelay; }
+
+    [Tooltip("La distance en m de vision d'un tank, pour le fog of war et la détection")]
+    [SerializeField] private float _tankVisionRange;
+    public float TankVisionRange { get => _tankVisionRange; }
 
     [Header("Tags")]
 
