@@ -11,10 +11,18 @@ public class Turret : MonoBehaviour
     private bool _canShoot = true;
     private Collider2D[] _tankColliders;
     private float currentDelay = 0f;
+    private TeamAssignment _firerTeam;
 
     private void Awake()
     {
         _tankColliders = GetComponentsInParent<Collider2D>();
+
+        // Get team assignment from parent tank
+        _firerTeam = GetComponentInParent<TeamAssignment>();
+        if (_firerTeam == null)
+        {
+            Debug.LogWarning($"[Turret] Tank parent of turret '{gameObject.name}' has no TeamAssignment!");
+        }
     }
 
     private void Update()
@@ -43,7 +51,16 @@ public class Turret : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab);
                 bullet.transform.position = barrel.position;
                 bullet.transform.localRotation = barrel.rotation;
-                bullet.GetComponent<Bullet>().Init();
+                
+                Bullet bulletComponent = bullet.GetComponent<Bullet>();
+                bulletComponent.Init();
+                
+                // Set which team fired this bullet
+                if (_firerTeam != null)
+                {
+                    bulletComponent.SetFirer(_firerTeam);
+                }
+                
                 foreach (var collider in _tankColliders)
                 {
                     Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), collider);

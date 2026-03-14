@@ -67,4 +67,26 @@ public class UnitSelection : MonoBehaviour
     {
 
     }
+
+    /// <summary>
+    /// Called when a unit dies - removes it from selection and unit list
+    /// </summary>
+    public void UnitDeath(Unit deadUnit)
+    {
+        GameObject deadGameObject = deadUnit.gameObject;
+        
+        // Remove from unit list
+        if (unitList.Contains(deadGameObject))
+        {
+            unitList.Remove(deadGameObject);
+        }
+
+        // Remove from selected units
+        if (unitsSelected.Contains(deadGameObject))
+        {
+            unitsSelected.Remove(deadGameObject);
+        }
+
+        Debug.Log($"[UnitSelection] Unit '{deadGameObject.name}' removed from selection (died)");
+    }
 }
