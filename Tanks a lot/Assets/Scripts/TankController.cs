@@ -43,7 +43,24 @@ public class TankController : MonoBehaviour
 
     public void HandleTurretMovement(Vector2 pointerPos)
     {
+        // Point turrets toward the given world position
+        if (turrets == null || turrets.Length == 0)
+            return;
 
+        foreach (var turret in turrets)
+        {
+            if (turret == null)
+                continue;
+
+            // Calculate direction from turret to target
+            Vector3 direction = (new Vector3(pointerPos.x, pointerPos.y, 0) - turret.transform.position).normalized;
+
+            // Calculate angle to rotate turret
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f; // -90 because up is forward
+
+            // Rotate turret toward target
+            turret.transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
 
